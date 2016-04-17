@@ -1,5 +1,5 @@
 .DS_Store
 
-.env
-public/
-themes/
+_site
+.sass-cache
+.jekyll-metadata
