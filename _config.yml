@@ -14,6 +14,14 @@ baseurl: "" # the subpath of your site, e.g. /blog
 url: "http://maciejgryka.github.io" # the base hostname & protocol for your site
 twitter_username: maciejgryka
 github_username:  maciejgryka
+safe: true
+timezone: Europe/Berlin
+encoding: utf-8
 
 # Build settings
 markdown: kramdown
+
+# headers
+webrick:
+  headers:
+    X-Clacks-Overhead: GNU Terry Pratchett
