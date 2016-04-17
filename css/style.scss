@@ -6,7 +6,7 @@
 
 
 // Our variables
-$base-font-family: "PT Sans", Helvetica, Arial, sans-serif;
+$base-font-family: "Fira Mono", Helvetica, Arial, sans-serif;
 $base-font-size:   16px;
 $base-font-weight: 400;
 $small-font-size:  $base-font-size * 0.875;
@@ -89,7 +89,7 @@ h1, h2, h3, h4, h5, h6,
 p, blockquote, pre,
 ul, ol, dl, figure,
 %vertical-rhythm {
-    margin-bottom: $spacing-unit / 2;
+    margin-bottom: $spacing-unit;
 }
 
 
@@ -290,7 +290,7 @@ pre {
 }
 
 .post {
-  font-family: "Source Sans Pro";
+  // font-family: "Source Sans Pro";
   font-size: 18px;
   font-weight: 300;
   padding-top: 0;
@@ -342,7 +342,7 @@ pre {
 .postDate {
   float: left;
   text-transform: uppercase;
-  font-family: "Source Sans Pro";
+  // font-family: "Source Sans Pro";
   font-size: 16px;
   font-weight: 300;
   letter-spacing: 2px;
@@ -369,10 +369,12 @@ pre {
   position: relative;
 }
 .site-title {
-  font-size: 64px;
+  // font-size: 64px;
   font-weight: 100;
-  font-family: 'PT Sans';
+  font-family: $base-font-family;
   font-weight: 500;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
   &,
   &:visited {
     color: $grey-color-dark;
@@ -382,7 +384,7 @@ pre {
   font-size: 14px;
   letter-spacing: 2px;
   text-indent: 6px;
-  font-family: 'Josefin Sans';
+  // font-family: 'Josefin Sans';
 }
 .exclamationMark {
   padding-left: 2em;
@@ -394,7 +396,7 @@ pre {
   font-size: 14px;
   letter-spacing: 2px;
   text-indent: 6px;
-  font-family: 'Josefin Sans';
+  // font-family: 'Josefin Sans';
   font-weight: 300;
   padding-top: 1em;
 }
@@ -402,12 +404,10 @@ pre {
   text-transform: uppercase;
   letter-spacing: 2px;
   text-indent: 2px;
-  font-family: "PT Sans";
   font-size: 12px;
 }
 .page-tagline {
   font-size: 18px;
-  font-family: "PT Sans";
   color: rgb(170, 170, 170);
   text-align: center;
   text-transform: lowercase;
@@ -482,9 +482,6 @@ pre {
   list-style: none;
   margin-left: 0;
 }
-.small-site-title {
-  font-family: "PT Sans";
-}
 .footer-col-wrapper {
   font-size: 15px;
   color: $grey-color;
@@ -492,7 +489,7 @@ pre {
   @extend %clearfix;
 }
 .footer-content {
-  font-family: "Josefin Sans";
+  // font-family: "Josefin Sans";
   font-weight: 300;
   letter-spacing: 1px;
 }
@@ -512,6 +509,7 @@ pre {
 .footer-col-3 {
   width: -webkit-calc(45% - (#{$spacing-unit} / 2));
   width: calc(45% - (#{$spacing-unit} / 2));
+  text-align: right;
 }
 @include media-query($on-laptop) {
   .footer-col-1,
@@ -555,7 +553,6 @@ pre {
 }
 .post-link {
   display: block;
-  font-size: 24px;
 }
 /**
  * Posts
@@ -564,10 +561,8 @@ pre {
   margin-bottom: $spacing-unit;
 }
 .post-title {
-  font-size: 62px;
-
   text-align: center;
-  font-family: "PT Sans";
+  font-family: $base-font-family;
   font-weight: 900;
   @include media-query($on-laptop) {
     font-size: 36px;
@@ -576,9 +571,7 @@ pre {
 .post-content {
   margin-bottom: $spacing-unit;
   padding-bottom: 3em !important;
-  p {
-    font-size: 1.5rem;
-  }
+  line-height: 1.75em;
   h2 {
     font-size: 32px;
     @include media-query($on-laptop) {
