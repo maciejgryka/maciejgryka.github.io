@@ -17,6 +17,7 @@ github_username:  maciejgryka
 safe: true
 timezone: Europe/Berlin
 encoding: utf-8
+permalink: /:title
 
 # Build settings
 markdown: kramdown
