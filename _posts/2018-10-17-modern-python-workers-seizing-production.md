@@ -2,6 +2,7 @@
 layout: post
 title:  "Modern Python Workers Seizing Production - presentation"
 date:   2018-10-17 20:00:00 +0200
+image: /static/2018-10-modern-python-workers/2018-10-17-modern-python-workers.001.jpeg
 ---
 
 I've recently given a lightning talk at the [PyData Berlin Meetup](https://www.meetup.com/PyData-Berlin/events/255361308/) about our tech stack for shipping Python workers in a modern way. Below are the slides.
