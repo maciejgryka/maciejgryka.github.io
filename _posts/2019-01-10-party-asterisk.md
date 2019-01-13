@@ -13,7 +13,7 @@ The ever-expanding arsenal of party parrots triggered an alert in my head: there
 
 ![partyasterisk.com](/static/partyasterisk.jpg)
 
-Building it was really fun: it's running on Docker on Heroku, uses the latest version of Python, has all the scientific python libs and has a CD set up on CircleCI. It's such a joy to be able to over-engineer and greenfield project to your hearts content without worrying about it making sense. Pure play! And the ability to [troll your CEO](https://twitter.com/maciejgryka/status/1076092936754946050) is just the icing on the cake.
+Building it was really fun: it's running on Docker on Heroku, uses the latest version of Python, has all the scientific python libs and has a CD set up on CircleCI (it's a subset of the stack I've recently described, which we use to deploy [dynamic Python workers at Rainforest](https://www.rainforestqa.com/blog/2019-01-10-how-to-make-python-workers-scale-dynamically/)). It's such a joy to be able to over-engineer a greenfield project to your hearts content without worrying about it making sense. Pure play! And the ability to [troll your CEO](https://twitter.com/maciejgryka/status/1076092936754946050) is just the icing on the cake.
 
 My plans for it currently include continuing to unreasonably optimize it, add recursion, rewrite it in Rust and deploy on Kubernetes. Check back soon!
 
