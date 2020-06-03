@@ -5,16 +5,15 @@ layout: default
 <div class="home">
   <ul class="post-list">
     {% for post in site.posts %}
-      <li>
-        <h2>
-          <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
-          <small class='post-date'>{{ post.date | date: "%F" }}</small>
-        </h2>
-        {% if post.image %}
-        <img src="{{ post.image }}" alt="" class="post-featured-image"/>
-        {% endif %}
-        {{ post.excerpt }}
-      </li>
+    <li>
+      <h2>
+        <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
+      </h2>
+      {% if post.image %}
+      <img src="{{ post.image }}" alt="" class="post-featured-image" />
+      {% endif %}
+      {{ post.excerpt }}
+    </li>
     {% endfor %}
   </ul>
 </div>
