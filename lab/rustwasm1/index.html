@@ -1,0 +1,96 @@
+<html>
+
+<head>
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type" />
+    <style type="text/css">
+        body {
+            background-color: lightgray;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #container {
+            position: relative;
+            width: 600px;
+            height: 600px;
+            border: 30px solid white;
+        }
+
+        #canvas,
+        #graph-labels,
+        #graph-labels .graph-label {
+            position: absolute;
+        }
+
+        #graph-labels {
+            width: 100%;
+            height: 100%;
+        }
+
+        #graph-labels .graph-label {
+            font-size: 12px;
+            display: ruby;
+        }
+
+        #graph-labels .graph-label:after {
+            margin-left: 5px;
+            margin-right: 5px;
+            content: "-";
+        }
+    </style>
+</head>
+
+<body>
+    <div id="buttons">
+        <button id="group-minute">Minute</button>
+        <button id="group-hour">Hour</button>
+        <button id="group-day">Day</button>
+        <button id="group-week">Week</button>
+        <button id="group-month">Month</button>
+        <button id="group-year">Year</button>
+    </div>
+    <div id="container">
+        <canvas id="canvas" height="600" width="600"></canvas>
+        <div id="graph-labels">
+        </div>
+    </div>
+    <script type="module">
+        import init, { start } from './pkg/wasm_no_bundler.js';
+
+        let jobs = '';
+
+        function timedStart(jobs, datePart, parse) {
+            const t0 = performance.now();
+            start(jobs, datePart, parse);
+            console.log("run('" + datePart + "') took " + (performance.now() - t0) + "ms");
+        }
+
+        async function downloadData(url) {
+            jobs = await fetch(url).then(response => response.text());
+        }
+
+        document.getElementById("group-minute").onclick = () => { timedStart(jobs, "minute", false); };
+        document.getElementById("group-hour").onclick = () => { timedStart(jobs, "hour", false); };
+        document.getElementById("group-day").onclick = () => { timedStart(jobs, "day", false); };
+        document.getElementById("group-week").onclick = () => { timedStart(jobs, "week", false); };
+        document.getElementById("group-month").onclick = () => { timedStart(jobs, "month", false); };
+        document.getElementById("group-year").onclick = () => { timedStart(jobs, "year", false); };
+
+        async function run(date_part) {
+            let csvPath = new URLSearchParams(window.location.search).get('csv');
+            await Promise.all([init(), downloadData(csvPath)]);
+            timedStart(jobs, date_part, true);
+        }
+
+        run("day");
+    </script>
+</body>
+
+</html>
