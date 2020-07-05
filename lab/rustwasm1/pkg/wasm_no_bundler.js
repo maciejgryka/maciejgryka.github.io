@@ -174,16 +174,30 @@ function getInt32Memory0() {
     return cachegetInt32Memory0;
 }
 /**
-* @param {string} raw_data
-* @param {string} date_part_str
-* @param {boolean} parse
 */
-export function start(raw_data, date_part_str, parse) {
+export function set_panic_hook() {
+    wasm.set_panic_hook();
+}
+
+/**
+* @param {string} raw_data
+*/
+export function parse(raw_data) {
     var ptr0 = passStringToWasm0(raw_data, wasm.__wbindgen_malloc, wasm.__wbindgen_realloc);
+    var len0 = WASM_VECTOR_LEN;
+    wasm.parse(ptr0, len0);
+}
+
+/**
+* @param {string} date_column
+* @param {string} date_part_str
+*/
+export function start(date_column, date_part_str) {
+    var ptr0 = passStringToWasm0(date_column, wasm.__wbindgen_malloc, wasm.__wbindgen_realloc);
     var len0 = WASM_VECTOR_LEN;
     var ptr1 = passStringToWasm0(date_part_str, wasm.__wbindgen_malloc, wasm.__wbindgen_realloc);
     var len1 = WASM_VECTOR_LEN;
-    wasm.start(ptr0, len0, ptr1, len1, parse);
+    wasm.start(ptr0, len0, ptr1, len1);
 }
 
 function isLikeNone(x) {
@@ -246,6 +260,24 @@ async function init(input) {
     };
     imports.wbg.__wbindgen_object_drop_ref = function(arg0) {
         takeObject(arg0);
+    };
+    imports.wbg.__wbg_new_59cb74e423758ede = function() {
+        var ret = new Error();
+        return addHeapObject(ret);
+    };
+    imports.wbg.__wbg_stack_558ba5917b466edd = function(arg0, arg1) {
+        var ret = getObject(arg1).stack;
+        var ptr0 = passStringToWasm0(ret, wasm.__wbindgen_malloc, wasm.__wbindgen_realloc);
+        var len0 = WASM_VECTOR_LEN;
+        getInt32Memory0()[arg0 / 4 + 1] = len0;
+        getInt32Memory0()[arg0 / 4 + 0] = ptr0;
+    };
+    imports.wbg.__wbg_error_4bb6c2a97407129a = function(arg0, arg1) {
+        try {
+            console.error(getStringFromWasm0(arg0, arg1));
+        } finally {
+            wasm.__wbindgen_free(arg0, arg1);
+        }
     };
     imports.wbg.__wbg_instanceof_Window_17fdb5cd280d476d = function(arg0) {
         var ret = getObject(arg0) instanceof Window;
