@@ -4,18 +4,17 @@ title:  "Building Secretwords"
 date:   2021-05-04 15:00 +0200
 ---
 
-
 As [mentioned previously](https://world.hey.com/maciej/secretwords-7e54715f), I recently built a simple online game while learning the Elixir/Phoenix web stack. This post describes what I built and how. This was a fun learning experience for me and hopefully useful for you too. The finished project is here: https://github.com/maciejgryka/secretwords
 
 ## Requirements
 
 So first, what are we building? Let's see:
 
-    It should be a web-based game, with the same rules are [Codenames](https://codenamesgame.com/).
-    It should use [Elixir](https://elixir-lang.org/), [Phoenix](https://www.phoenixframework.org/) and maybe [LiveView](https://github.com/phoenixframework/phoenix_live_view) (importantly, it should be server-side-rendered as much as possible with minimal Javascript). While tech stacks mostly don't belong in requirements, I'm doing this to learn a specific stack, so there.
-    It should work in real-time. In other words, the state of the game needs to be kept in sync and auto-updated for everyone at the same time.
-    It's OK to keep everything in memory, even if it's lost on restarts. No persistence, no databases.
-    No logins, authentication - anyone can connect and play immediately without an account.
+- It should be a web-based game, with the same rules are [Codenames](https://codenamesgame.com/).
+- It should use [Elixir](https://elixir-lang.org/), [Phoenix](https://www.phoenixframework.org/) and maybe- [LiveView](https://github.com/phoenixframework/phoenix_live_view) (importantly, it should be server-side-rendered- as much as possible with minimal Javascript). While tech stacks mostly don't belong in requirements, I'm doing- this to learn a specific stack, so there.
+- It should work in real-time. In other words, the state of the game needs to be kept in sync and auto-updated for- everyone at the same time.
+- It's OK to keep everything in memory, even if it's lost on restarts. No persistence, no databases.
+- No logins, authentication - anyone can connect and play immediately without an account.
 
 
 That's pretty much it! I think - writing these down retrospectively is not ideal, but this should covers my initial intentions.
