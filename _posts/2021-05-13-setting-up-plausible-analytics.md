@@ -27,14 +27,15 @@ It wasn't initially clear to me what the differences were - after a buch of read
     - built with Elixir <3.
 
 - Both
-    - blocked by uBlock Origin, even after DNS masking,
     - no cookies,
     - email reports,
     - serve JS from own domain,
     - privacy-focused,
-    - Google Search Console integration (Fathom V3),
-    - track campaigns with UTM (Fathom V3),
+    - Google Search Console integration (Fathom v3),
+    - track campaigns with UTM (Fathom v3),
     - filtering (Fathom v3),
+
+### Suddenly, Adblockers
 
 One annoyance is that they are both blocked by uBlock Origin, even after [setting up a DNS CNAME record](https://plausible.io/docs/custom-domain/) to serve the script from own domain.
 
