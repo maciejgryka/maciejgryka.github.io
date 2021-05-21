@@ -31,4 +31,4 @@ Overall mapping how I wanted the app to work to code was straightforward, even i
 
 Overall this project was a joy: learning cool, new tech while creating something potentially useful. Also it was pretty quick to get working! I spent much more time setting up the infrastructure for deploys and the CI/CD pipeline for it, which I'll cover in the next post.
 
-Please [let me know](twitter.com/maciejgryka) if you found this helpful, interesting, or have any feedback.
+Please [let me know](https://twitter.com/maciejgryka) if you found this helpful, interesting, or have any feedback.
