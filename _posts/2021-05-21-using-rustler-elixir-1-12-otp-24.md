@@ -4,9 +4,9 @@ title:  "Using Rustler with Elixir 1.12/OTP 24"
 date:   2021-05-21 15:00 +0200
 ---
 
-Read this if you want to get `rustler` running on the new, shiny [Elixir 1.12/OTP 24](https://elixir-lang.org/blog/2021/05/19/elixir-v1-12-0-released/).
+Read this if you want to get [`rustler`](https://github.com/rusterlium/rustler) running on the new, shiny [Elixir 1.12/OTP 24](https://elixir-lang.org/blog/2021/05/19/elixir-v1-12-0-released/).
 
-The problem is that, as I'm writing this, `rustler` had a bunch of fixes, which did not yet make it to an official Hex release. So if you try to just add the following to your `mix.exs` (as [hex](https://hex.pm/packages/rustler) tells you to), your project will not build on the new version of Elixir/OTP:
+The problem is that, as I'm writing this, [`rustler`](https://github.com/rusterlium/rustler) had a bunch of fixes, which did not yet make it to an official Hex release. So if you try to just add the following to your `mix.exs` (as [hex](https://hex.pm/packages/rustler) tells you to), your project will not build on the new version of Elixir/OTP:
 
 ```elixir
 # this does not work with Elixir 1.12
