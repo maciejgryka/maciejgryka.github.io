@@ -4,7 +4,7 @@ title:  "Building Secretwords"
 date:   2021-05-04 15:00 +0200
 ---
 
-As [mentioned previously](https://world.hey.com/maciej/secretwords-7e54715f), I recently built a simple online game while learning the Elixir/Phoenix web stack. This post describes what I built and how. This was a fun learning experience for me and hopefully useful for you too. The finished project is here: https://github.com/maciejgryka/secretwords
+As [mentioned previously]({% post_url 2021-04-09-secretwords %}), I recently built a simple online game while learning the Elixir/Phoenix web stack. This post describes what I built and how. This was a fun learning experience for me and hopefully useful for you too. The finished project is here: https://github.com/maciejgryka/secretwords
 
 ## Requirements
 

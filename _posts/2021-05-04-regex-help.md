@@ -4,9 +4,7 @@ title:  "regex.help"
 date:   2021-05-04 15:00 +0200
 ---
 
-**TL;DR**: I made [regex.help](https://regex.help), which might help you when you're writing your next regex.
-
-A couple of weeks ago, after I finished [working on Secretwords]({% post_url 2021-05-03-building-secretwords %}), a colleague of mine pointed me towards [`grex`](https://github.com/pemistahl/grex). It's a really neat tool to help you write regex.
+Next time you're trying to write some regex, check out [regex.help](https://regex.help) - it should make your task much easier. A couple of weeks ago, after [Secretwords was finished]({% post_url 2021-05-03-building-secretwords %}), a colleague pointed me towards [`grex`](https://github.com/pemistahl/grex). It's a really neat tool to help you write regex.
 
 The main idea is that you provide a couple of examples of the text you want to match and `grex` spits out a pattern matching all of them.
 

@@ -12,7 +12,7 @@ For a while now I've been hearing about both [Plausible Analytics](https://plaus
 - there are no cookies, so no need to add any banners,
 - they're fairly simple UI-wise, exposing just the high-level info.
 
-### Features
+## Features
 
 It wasn't initially clear to me what the differences were - after a buch of reading, turns out there aren't that many! They're both very easy to set up, Plausible has a lower/cheaper pricing tier and a couple more features, which are just now in the preview version of Fathom (v3) - but otherwise they seem to be very comparable.
 
@@ -35,7 +35,7 @@ It wasn't initially clear to me what the differences were - after a buch of read
     - track campaigns with UTM (Fathom v3),
     - filtering (Fathom v3),
 
-### Suddenly, Adblockers
+## Suddenly, Adblockers
 
 One annoyance is that they are both blocked by uBlock Origin, even after [setting up a DNS CNAME record](https://plausible.io/docs/custom-domain/) to serve the script from own domain.
 
