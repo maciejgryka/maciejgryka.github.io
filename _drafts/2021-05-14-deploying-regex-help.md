@@ -8,7 +8,7 @@ Now that I've written up [how regex.help was built]({% post_url 2021-05-20-build
 
 In my [last side project]({% post_url 2021-05-03-building-secretwords %}), I wanted to see how it feels deploying everything by hand. Turns out, it's fine - but not the most interesting thing to do. This [sad, little script](https://github.com/maciejgryka/secretwords/blob/main/script/deploy) does most of the work, but then I still need to SSH into the server and restart. If I wanted to make it do everything, I'd probably end up with something similar to [what David did here](https://github.com/zestcreative/elixir-utilities-web/blob/main/bin/deploy).
 
-Also, starting a new project requires a bunch of manual setup and I wrote down the necessary steps [here](https://github.com/maciejgryka/secretwords/blob/main/docs/provision.md) (for which BTW I have to thank Simon Willison, who's blowing the horn of writing documentation for personal projects). In the past, I atomated stuff like this with [Ansible](https://www.ansible.com/), but didn't get to doing it this time.
+Also, starting a new project requires a bunch of manual setup and I wrote down the necessary steps [here](https://github.com/maciejgryka/secretwords/blob/main/docs/provision.md) (for which BTW I have to thank [Simon Willison](twitter.com/simonw/), who's blowing the horn of writing documentation for personal projects). In the past, I atomated stuff like this with [Ansible](https://www.ansible.com/), but didn't get to doing it this time.
 
 ## Fly
 
@@ -20,7 +20,7 @@ Also, it's the kind of place, where the [founders respond to your support reques
 
 ## Deployment
 
-OK, enough with the fawning - how do you actually deploy this thing? As mentioned, you need a `Dockerfile` first. It can be pretty simple in the simplest cases - you can use the official elixir Docker image, e.g. [elixir:1.12](https://hub.docker.com/_/elixir/) and serve your app using `mix server`. In my case [the `Dockerfile` got a bit more involved](https://github.com/maciejgryka/regex_help/blob/main/Dockerfile), because I needed Rust and played with multi-stage builds a little. Fly also has [a good example in their Elixir setup guide](https://fly.io/docs/getting-started/elixir/#dockerfile).
+OK, enough with the fawning - how do you actually deploy this thing? As mentioned, you need a `Dockerfile` first. It can be pretty simple in the simplest cases - you can use the official elixir Docker image (try [elixir:1.12](https://hub.docker.com/_/elixir/)) and serve your app using `mix server`. In my case [the `Dockerfile` got a bit more involved](https://github.com/maciejgryka/regex_help/blob/main/Dockerfile), because I needed Rust and played with multi-stage builds a little. Fly also has [a good example in their Elixir setup guide](https://fly.io/docs/getting-started/elixir/#dockerfile).
 
 Once I had a working `Dockerfile`, following that guide didn't take very long and my app was live. That was neat - `flyctl` feels like a Heroku-like CLI tool and the process was generally smooth, including the [custom domain setup](https://fly.io/docs/app-guides/custom-domains-with-fly/) and getting a TLS certificate.
 
@@ -28,10 +28,33 @@ At this point I could easily make changes to the app and deploy using `fly deplo
 
 ## Continuous Integration
 
-Of course, I didn't want to stop there - the code should get tested and deployed on `git push`.
+Of course, I didn't want to stop there - the code should get tested and deployed automatically of everything passes on every merge to the main branch. Basically, the workflow I wanted was:
+
+- on every push to the main repository,
+- run automated checks (formatting, style check using [credo](https://github.com/rrrene/credo), unit tests),
+- if that passes, spin up a a QA environment and deploy the new version there,
+- run end-to-end functional tests (using [RainforestQA](rainforestqa.com/) - where I work on building the automation product - dogfooding!),
+- if they pass, deploy to production and spin down QA.
+
+Is that an overkill for a hobby app? Yes! Probably! Maybe! It's fun, though! And in all seriousness, I think this kind of setup it's worth it for most projects. If your app is small, it's realistic to set up end-to-end test every single feature on every single release, which is just awesome. As it grows, as long as you can write your tests as you add new stuff, you'll continue chugging along happily.
+
+The final pipeline, which I set up on Github Actions, looks like below and [here's the YAML file defining it](https://github.com/maciejgryka/regex_help/blob/main/.github/workflows/ci.yml).
+
+![GitHub Actions CI Pipeline for regex.help](/static/2021-06-09-regex-help-ci.png)
+
+There are a couple of interesting things going on here, so let's go through the file job-by-job.
+
+### Automated (formatting/style/unit) tests
+
+The first stage, hepfully called `unit-test`, is running the automated checks - it makes sense to run these first, since they're fast and effectively free. If any of them fails, there's no point going further.
+
+Since we've got a `Dockerfile`, we ideally want to build and test with it. There are, however, some complications:
+
+1. We have dev-only dependencies, like e.g. credo, which we don't need in production - they're [defined as `only: :test` in `mix.exs`](https://github.com/maciejgryka/regex_help/blob/1f5d7e3892a204764fde2288bcf87b44bbc6f160/mix.exs#L51). Installing them in production is not the end of the world, but we should try to avoid it.
+1. Similarly, there are files, like helper scripts and code formatter configs, which we don't need in production.
 
 - summary: describe how regex.help is deployed, contrast with Secretwords
-    - fly vs. DO VPS
+    - ~~fly vs. DO VPS~~
     - CI!
     - staging!
     - rainforest tests!
