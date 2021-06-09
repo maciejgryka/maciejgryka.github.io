@@ -2,6 +2,8 @@
 layout: post
 title:  "Deploying regex.help"
 date:   2021-05-22 15:00 +0200
+image: /static/2021-06-09-regex-help-ci.png
+
 ---
 
 Now that I've written up [how regex.help was built]({% post_url 2021-05-20-building-regex-help %}), it's time to focus on deployment. I used to think deployment was... not the most exciting part of building things. Howqever, recently I find it more and more interesting, probably because I care more about good CI/CD. Elixir and [fly.io](https://fly.io) make it even cooler and shinier - let's jump in!
@@ -53,10 +55,38 @@ Since we've got a `Dockerfile`, we ideally want to build and test with it. There
 1. We have dev-only dependencies, like e.g. credo, which we don't need in production - they're [defined as `only: :test` in `mix.exs`](https://github.com/maciejgryka/regex_help/blob/1f5d7e3892a204764fde2288bcf87b44bbc6f160/mix.exs#L51). Installing them in production is not the end of the world, but we should try to avoid it.
 1. Similarly, there are files, like helper scripts and code formatter configs, which we don't need in production.
 
-- summary: describe how regex.help is deployed, contrast with Secretwords
-    - ~~fly vs. DO VPS~~
-    - CI!
-    - staging!
-    - rainforest tests!
-    - CD!
-- writing for: web devs aspiring to do CI/CD
+Luckily, both of these can be solved using Docker multi-stage builds. We define the first stage, our builder, to have all the things we need to build our app: Erlang, Elixir, Rust etc. and we run with it all the way until installing (pro only!) dependencies.
+
+Then we take a little pause and define our "testing" stage of the Dockerfile. In it, we copy over a couple more files and install all dependencies, including non-prod. We also configure the test stage to end by running the tests. Then, in our CI config, we basically just say "build and run the test stage" which will result in only doing what's necessary here and skipping the rest of the Dockerfile.
+
+Similarly, we can define the production/app stage with just the bare minimums: compile files of out app an a handful of packages needed to run everything. We don't even need Elixir at this point, since the app has been compiled down to Erlang!
+
+### Scaling up and deploying to QA
+
+Assuming our automated tests passed, we want to move on to end-to-end functional tests. We could just deploy to production, test there and revert if anything's wrong, but we can do better than that. One of the advantages of using a host like Fly is that we can easily create apps as well as scale them up/down.
+
+Since [fly published their GitHub Action](https://github.com/superfly/flyctl-actions) it's pretty easy to hook up: use the `superfly/flyctl-actions@1.1` action and pass in `scale`/`deploy` as arguments, passing in the appropriate config files, and you're done... in theory. In practice, I found that running `scale count 1` when your app is scaled down to 0 sometimes [does nothing without returning an error](https://community.fly.io/t/intermittent-fly-scale-count-failures/1525/7?u=maciej). I ened up solving this problem in a very sophisticated way: running the command twice. Since it's indepotent, it doesn't matter and it seems to do the trick.
+
+Another thing worth mentioning is that this whole workflow assumes there's only a single PR being worked on at a time and thus we only have a single QA environment. If there were many copies of me working on different features at the same time, I'd probably use the Fly GraphQL API to create QA environments dynamically. But let's keep it simple!
+
+### Running Rainforest tests
+
+Now comes the exciting stuff: running end-to-end tests to make sure our app actually works as intended. Since I've built a decent chunk of our [automation product at Rainforest](https://www.rainforestqa.com/features/test-automation), I'm going to use that.
+
+I've set up a couple short tests to verify the functionality; here's how the test looks like
+
+![Rainforest test for regex.help](/static/2021-06-09-rf-test.png)
+
+And [here's a video](/static/Run744741_Test283096_windows10_chrome.mp4) of a run-through, which Rainforest records as it's testing.
+
+### Production deployment
+
+Finally, after all the build steps above pass, we can deploy to production. This is the same as deploying to QA earlier on, only now we use a different config file.
+
+We can also spin down the QA environment to avoid using resources unnecessarily.
+
+## Conclusion
+
+And that brings us to the end of our journey: we now have a working Elixir app, backed by a Rust package, running all over the world and auto-dedploying with a decent CI/CD pipeline. That's not to be sneezed at.
+
+Let me know what you think [on Twitter](https://twitter.com/maciejgryka) and whether you found this useful.
