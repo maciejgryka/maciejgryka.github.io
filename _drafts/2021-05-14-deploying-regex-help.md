@@ -4,15 +4,15 @@ title:  "Deploying regex.help"
 date:   2021-05-22 15:00 +0200
 ---
 
-Now that I've written up [how regex.help was built]({% post_url 2021-05-20-building-regex-help %}), it's time to focus on deployment. I used to think deployment was boring, but recently I find it more and more exciting, probably because I care more about good CI/CD. Elixir and [fly.io](https://fly.io) make it even more cool and shiny - let's jump in!
+Now that I've written up [how regex.help was built]({% post_url 2021-05-20-building-regex-help %}), it's time to focus on deployment. I used to think deployment was... not the most exciting part of building things. Howqever, recently I find it more and more interesting, probably because I care more about good CI/CD. Elixir and [fly.io](https://fly.io) make it even cooler and shinier - let's jump in!
 
-In my [last side project]({% post_url 2021-05-03-building-secretwords %}), I wanted to see how it feels deploying everything by hand. It's fine - but not very exciting. This [sad, little script](https://github.com/maciejgryka/secretwords/blob/main/script/deploy) does most of the work, but then I still need to SSH into the server and restart. If I wanted to make it do everything, I'd probably end up with something similar to [what David did here](https://github.com/zestcreative/elixir-utilities-web/blob/main/bin/deploy).
+In my [last side project]({% post_url 2021-05-03-building-secretwords %}), I wanted to see how it feels deploying everything by hand. Turns out, it's fine - but not the most interesting thing to do. This [sad, little script](https://github.com/maciejgryka/secretwords/blob/main/script/deploy) does most of the work, but then I still need to SSH into the server and restart. If I wanted to make it do everything, I'd probably end up with something similar to [what David did here](https://github.com/zestcreative/elixir-utilities-web/blob/main/bin/deploy).
 
-Also, starting a new project requires a bunch of setup (I wrote down the steps [here](https://github.com/maciejgryka/secretwords/blob/main/docs/provision.md)). In the past, I atomated stuff like this with [Ansible](https://www.ansible.com/), but didn't get to doing it this time.
+Also, starting a new project requires a bunch of manual setup and I wrote down the necessary steps [here](https://github.com/maciejgryka/secretwords/blob/main/docs/provision.md) (for which BTW I have to thank Simon Willison, who's blowing the horn of writing documentation for personal projects). In the past, I atomated stuff like this with [Ansible](https://www.ansible.com/), but didn't get to doing it this time.
 
 ## Fly
 
-Which is just as well - because it made me look at other options and find [fly.io](https://fly.io/). Fly is great - it takes your `Dockerfile` and magically makes it run on servers around the world, as close to your users as possible. So when you visit your site from Berlin, you'll probably get a response from the Frankfurt data center, but if you're in San Francisco, Sunnyvale, CA will probably handle it.
+Which is just as well - because it made me look at other options and find [fly.io](https://fly.io/). Fly is great - it takes your `Dockerfile` and magically makes it run on servers around the world, as close to your users as possible. So when you visit your site from Berlin, you'll get a response from the Frankfurt data center, but if you're in San Francisco, Sunnyvale, CA will probably handle it.
 
 The way this happens is all pretty well-described in the [Fly docs](https://fly.io/docs/introduction/) and their blog. While it initially only sounds good for stateless/DB-less apps, they actually have a great story for databases too (probably the thing I will play with next).
 
