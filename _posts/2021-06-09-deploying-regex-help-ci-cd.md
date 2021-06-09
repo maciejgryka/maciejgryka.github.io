@@ -1,7 +1,7 @@
 ---
 layout: post
-title:  "Deploying regex.help"
-date:   2021-05-22 15:00 +0200
+title:  "Deploying regex.help and CI/CD"
+date:   2021-06-09 15:00 +0200
 image: /static/2021-06-09-regex-help-ci.png
 
 ---
